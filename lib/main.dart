@@ -1,8 +1,8 @@
 // main.dart
-import 'package:base_flutter_template/api_service.dart';
+import 'package:base_flutter_template/app_colors.dart';
 import 'package:base_flutter_template/router.dart';
+import 'package:base_flutter_template/shared_menu_items.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'animated_bubble_menu.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ApiService(),
+      create: (context) => AuthService(),
       child: const MyAppView(),
     );
   }
@@ -28,13 +28,13 @@ class MyAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Rebirth',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
       routerConfig: createRouter(
-        Provider.of<ApiService>(context, listen: false),
+        Provider.of<AuthService>(context, listen: false),
       ),
     );
   }
@@ -47,102 +47,69 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedBubbleMenu(
       config: BubbleMenuConfig(
-        mainBubbleColor: Colors.deepPurple,
-        menuRadius: 150, // Increased radius
+        mainBubbleColor: Colors.teal,
+        menuRadius: 150,
         mainBubbleSize: 70,
         menuItemSize: 55,
         animationCurve: Curves.elasticOut,
         closeOnItemTap: true,
       ),
-      items: [
-        AnimatedBubbleItem(
-          icon: Icons.home,
-          label: 'Home',
-          color: Colors.red,
-          onTap: () {
-            print('Home tapped');
-            // Add navigation logic here
-          },
-        ),
-        AnimatedBubbleItem(
-          icon: Icons.thunderstorm,
-          label: 'Elettricisti',
-          color: Colors.blue,
-          onTap: () {
-            context.go('elettricisti');
-          },
-        ),
-        AnimatedBubbleItem(
-          icon: Icons.settings,
-          label: 'Settings',
-          color: Colors.green,
-          onTap: () {
-            print('Settings tapped');
-          },
-        ),
-        AnimatedBubbleItem(
-          icon: Icons.favorite,
-          label: 'Favorites',
-          color: Colors.pink,
-          onTap: () {
-            print('Favorites tapped');
-          },
-        ),
-        AnimatedBubbleItem(
-          icon: Icons.notifications,
-          label: 'Alerts',
-          color: Colors.orange,
-          onTap: () {
-            print('Notifications tapped');
-          },
-        ),
-        AnimatedBubbleItem(
-          icon: Icons.shopping_cart,
-          label: 'Cart',
-          color: Colors.teal,
-          onTap: () {
-            print('Cart tapped');
-          },
-        ),
-      ],
+      items: getSharedMenuItems(context),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Animated Bubble Menu'),
-          backgroundColor: Colors.deepPurple,
+          title: const Text('Rebirth'),
+          backgroundColor: Colors.teal,
           foregroundColor: Colors.white,
+          elevation: 0,
         ),
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Colors.deepPurple.shade50, Colors.white],
+              colors: [Colors.teal.shade50, Colors.white],
             ),
           ),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.touch_app,
-                  size: 80,
-                  color: Colors.deepPurple.shade200,
-                ),
+                Icon(Icons.refresh, size: 80, color: Colors.teal.shade300),
                 const SizedBox(height: 20),
                 const Text(
-                  'Tap the bubble below!',
+                  'Welcome to Rebirth',
                   style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.w300,
+                    fontSize: 32,
+                    color: Colors.teal,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  '$AnimatedBubbleMenu items available',
+                const Text(
+                  'Tap the bubble below to get started',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.deepPurple.shade400,
+                    color: Colors.teal,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.teal.opaque(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    '4 menus available',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.teal.shade600,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],
